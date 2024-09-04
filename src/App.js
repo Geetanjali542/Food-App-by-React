@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import Nav from "./components/Nav";
+
+// Lazy load components
+const Hero = lazy(() => import('./components/Hero'));
+const SingleFood = lazy(() => import('./components/SingleFood'));
+const MealDetails = lazy(() => import('./components/MealDetails'));
+const RandomMeal = lazy(() => import('./components/RandomMeal'));
+const FlavorsPage = lazy(() => import('./components/FlavorsPage'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Nav />
+      <Suspense fallback={<div>Loading please wait...</div>}>
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/singlefood" element={<SingleFood />} />
+          <Route path="/mealdetails/:idMeal" element={<MealDetails />} />
+          <Route path="/randommeal" element={<RandomMeal />} />
+          <Route path="/flavorspage" element={<FlavorsPage />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 
